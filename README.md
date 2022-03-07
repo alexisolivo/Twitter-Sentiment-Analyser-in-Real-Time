@@ -73,6 +73,5 @@ https://medium.com/@devkosal/switching-java-jdk-versions-on-macos-80bc868e686a
 ```
 ## Sentiment140 Dataset
 
-```
-https://www.kaggle.com/kazanova/sentiment140
-```
+[Sentiment140]https://www.kaggle.com/kazanova/sentiment140
+
