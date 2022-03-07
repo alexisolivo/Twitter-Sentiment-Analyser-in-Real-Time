@@ -71,31 +71,8 @@ Steps for mac os:
 
 https://medium.com/@devkosal/switching-java-jdk-versions-on-macos-80bc868e686a
 ```
-### Install virtualenv
-virtualenv is a tool to create isolated Python projects. Think of it, as a cleanroom, isolated from other virsions of Python and libriries.
-
-Enter this command into terminal:
+## Sentiment140 Dataset
 
 ```
-sudo pip install virtualenv
-```
-
-or if you get an error
-```
-sudo -H pip install virtualenv
-```
-
-### Start virtualenv:
-Navigate to where you want to store your code. Create new directory.
-```
-mkdir my_project && cd my_project
-```
-Inside my_project folder create a new virtualenv by typing the below command:
-```
-virtualenv env
-```
-
-Activate virtualenv
-```
-source env/bin/activate
+https://www.kaggle.com/kazanova/sentiment140
 ```
