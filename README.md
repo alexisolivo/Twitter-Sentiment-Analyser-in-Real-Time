@@ -2,6 +2,10 @@
 
 A real time streaming ETL pipeline for Twitter data is implemented using Apache Kafka, Apache Spark and Delta Lake Database. Sentiment analysis is performed using Spark Machine Learning libraries on the streaming data, before being written to the database.
 
+## Architecture
+
+![Image]()
+
 ## Usage:
 
 STEP 1: GET KAFKA
