@@ -57,18 +57,15 @@ Topic:twitterdata PartitionCount:1    ReplicationFactor:1 Configs:
 
 Python Code
 Installing Kafka API for Python:
-So before we get started using Kafka in Python, we will need to install the Kafka library in Python. On your terminal run the following code:
+So before we get started using Kafka in Python, we will need to install all the dependencies usind the requirements.txt file:
+
 ```
-pip3 install kafka
+pip install -r requirements.txt
 ```
 
 ### Producer Module Code:
 On your IDE, create a new Python module called producer. Here you can use your Tweepy’s on_data function with the KafkaProducer to feed the raw twitter data into your Kafka Cluster.
 
-Install tweepy package:
-```
-pip install tweepy
-```
 
 ```
 In case of java error when starting spark, try switching to JAVA SDK 8
@@ -78,31 +75,7 @@ Steps for mac os:
 
 https://medium.com/@devkosal/switching-java-jdk-versions-on-macos-80bc868e686a
 ```
-### Install virtualenv
-virtualenv is a tool to create isolated Python projects. Think of it, as a cleanroom, isolated from other virsions of Python and libriries.
+## Sentiment140 Dataset
 
-Enter this command into terminal:
+[Sentiment140]https://www.kaggle.com/kazanova/sentiment140
 
-```
-sudo pip install virtualenv
-```
-
-or if you get an error
-```
-sudo -H pip install virtualenv
-```
-
-### Start virtualenv:
-Navigate to where you want to store your code. Create new directory.
-```
-mkdir my_project && cd my_project
-```
-Inside my_project folder create a new virtualenv by typing the below command:
-```
-virtualenv env
-```
-
-Activate virtualenv
-```
-source env/bin/activate
-```
