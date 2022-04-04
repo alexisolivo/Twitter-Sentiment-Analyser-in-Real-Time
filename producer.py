@@ -19,22 +19,19 @@ class KafkaConfig():
         self.access_token = tc.access_token
         self.access_token_secret = tc.access_token_secret
         
- 
- 
     def get_producer(self):
         return self.producer
-
 
 class TwitterAuth():
     """SET UP TWITTER AUTHENTICATION"""
 
     def authenticate_twitter_app(self):
-
         kafka_config = KafkaConfig()
+        #Create OAuthHandler object
         auth = OAuthHandler(kafka_config.consumer_key, kafka_config.consumer_secret)
+        #Set access token and secret
         auth.set_access_token(kafka_config.access_token, kafka_config.access_token_secret)
         return auth
-
 
 
 class TwitterStreamer():
