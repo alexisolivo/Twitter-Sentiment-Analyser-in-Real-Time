@@ -8,6 +8,8 @@ A real time streaming ETL pipeline for Twitter data is implemented using Apache 
 
 ## Usage:
 
+### Setting up Kafka Environment:
+
 STEP 1: GET KAFKA
 Download the latest Kafka release and extract it:
 
@@ -57,26 +59,11 @@ $ bin/kafka-topics.sh --describe --topic twitterdata --bootstrap-server localhos
 Topic:twitterdata PartitionCount:1    ReplicationFactor:1 Configs:
     Topic: quickstart-events Partition: 0    Leader: 0   Replicas: 0 Isr: 0
 
-Python Code
-Installing Kafka API for Python:
-So before we get started using Kafka in Python, we will need to install all the dependencies usind the requirements.txt file:
-
+### Installing the python dependencies:
 ```
 pip install -r requirements.txt
 ```
 
-### Producer Module Code:
-On your IDE, create a new Python module called producer. Here you can use your Tweepy’s on_data function with the KafkaProducer to feed the raw twitter data into your Kafka Cluster.
-
-
-```
-In case of java error when starting spark, try switching to JAVA SDK 8
-ie java version "1.8.0_202"
-
-Steps for mac os: 
-
-https://medium.com/@devkosal/switching-java-jdk-versions-on-macos-80bc868e686a
-```
 ## Sentiment140 Dataset
 
 [Sentiment140]https://www.kaggle.com/kazanova/sentiment140
