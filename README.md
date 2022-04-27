@@ -74,14 +74,14 @@ Below are the 5 stages of estimation:
 
 StopWordRemover: It takes input as a sequence of strings and drops all the stop words from the input data.
 
-![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/ML%20Pipeline.jpg)
+![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/StopWordRemover.png)
 
 
 CounterVectorizer: It represents the words in the text in the form of numerical data instead of a sentence. This is easier for the machine to understand and for machine learning is made simpler.
 	
 text = [‘Hello my name is james, this is my python notebook’]
 
-![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/ML%20Pipeline.jpg)
+![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/CounterVectorizer.png)
 
 
 Inverse Document Frequency: It is a measure of how important a word is in a collection of  documents.
