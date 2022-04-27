@@ -101,11 +101,10 @@ if __name__ == '__main__':
     #### Passing the dataframe to ml pipeline
 
     model_path = str(SRC_DIR.joinpath('models'))
+    
     pipeline_model = PipelineModel.load(model_path)
 
     prediction_df = pipeline_model.transform(kafka_df)
-
-    prediction_df.printSchema()
 
     '''
     Prediction Value:
