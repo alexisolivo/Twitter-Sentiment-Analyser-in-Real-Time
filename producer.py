@@ -17,7 +17,7 @@ class KafkaConfig():
     def get_producer(self):
         return self.producer
 
-class TwitterConfig():
+class TwitterAuthConfig():
     def __init__(self):
         self._consumer_key = tc.consumer_key
         self._consumer_secret = tc.consumer_secret
@@ -43,7 +43,7 @@ class TwitterAuth():
 
     def authenticate_twitter_app(self):
 
-        twitter_config = TwitterConfig()
+        twitter_config = TwitterAuthConfig()
         auth = OAuthHandler(twitter_config.get_consumer_key(), twitter_config.get_consumer_secret())
         auth.set_access_token(twitter_config.get_access_token(), twitter_config.get_access_token_secret())
         return auth
