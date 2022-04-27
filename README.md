@@ -6,6 +6,7 @@ A real time streaming ETL pipeline for Twitter data is implemented using Apache 
 
 ![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/Architecture.jpg?raw=true)
 
+
 ## Usage:
 
 ### Setting up Kafka Environment:
@@ -63,8 +64,34 @@ Topic:twitterdata PartitionCount:1    ReplicationFactor:1 Configs:
 ```
 pip install -r requirements.txt
 ```
+## ML Pipeline for Sentiment Analysis
 
-## Sentiment140 Dataset
+Stanford's [Sentiment140]https://www.kaggle.com/kazanova/sentiment140 dataset is used to train an ML pipeline consisting of five stages. Spark ML libraries were used for creating the ML pipeline. 
 
-[Sentiment140]https://www.kaggle.com/kazanova/sentiment140
+![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/ML%20Pipeline.jpg)
+
+Below are the 5 stages of estimation:
+
+StopWordRemover: It takes input as a sequence of strings and drops all the stop words from the input data.
+
+![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/ML%20Pipeline.jpg)
+
+
+CounterVectorizer: It represents the words in the text in the form of numerical data instead of a sentence. This is easier for the machine to understand and for machine learning is made simpler.
+	
+text = [‘Hello my name is james, this is my python notebook’]
+
+![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/ML%20Pipeline.jpg)
+
+
+Inverse Document Frequency: It is a measure of how important a word is in a collection of  documents.
+
+Label Indexing: It is done on the sentiment value column present in the Sentiment140 dataset. The column labels are converted to indices of [0, number of labels]. Since there are only two sentiment values in the dataset 4 - positive and 0 - negative which will be labelled as 0 and 1. 0 will be applied to the most frequent label and it will be labelled in descending order.
+
+Logistic Regression: It is a very well known algorithm used to predict categorical outcome. We use binary logistic regression here to predict a binary outcome that has two categorical outcomes namely positive or negative.
+
+
+
+
+
 
