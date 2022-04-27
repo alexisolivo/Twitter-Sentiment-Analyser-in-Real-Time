@@ -13,26 +13,41 @@ WORDS_TO_TRACK = ["Covid-19","coronavirus","covid"]
 class KafkaConfig():
     def __init__(self):
         self.producer = KafkaProducer(bootstrap_servers='localhost:9092') #Same port as your Kafka server
-        """Fill in the twitter developer API credentials here"""
-        self.consumer_key = tc.consumer_key
-        self.consumer_secret = tc.consumer_secret
-        self.access_token = tc.access_token
-        self.access_token_secret = tc.access_token_secret
-        
+
     def get_producer(self):
         return self.producer
+
+class TwitterConfig():
+    def __init__(self):
+        self._consumer_key = tc.consumer_key
+        self._consumer_secret = tc.consumer_secret
+        self._access_token = tc.access_token
+        self._access_token_secret = tc.access_token_secret
+    
+    def get_consumer_key(self):
+        return self._consumer_key
+    
+    def get_consumer_secret(self):
+        return self._consumer_secret
+
+    def get_access_token(self):
+        return self._access_token
+
+    def get_access_token_secret(self):
+        return self._access_token_secret
+
+
 
 class TwitterAuth():
     """SET UP TWITTER AUTHENTICATION"""
 
     def authenticate_twitter_app(self):
-        kafka_config = KafkaConfig()
-        #Create OAuthHandler object
-        auth = OAuthHandler(kafka_config.consumer_key, kafka_config.consumer_secret)
-        #Set access token and secret
-        auth.set_access_token(kafka_config.access_token, kafka_config.access_token_secret)
-        return auth
 
+        twitter_config = TwitterConfig()
+        auth = OAuthHandler(twitter_config.get_consumer_key(), twitter_config.get_consumer_secret())
+        auth.set_access_token(twitter_config.get_access_token(), twitter_config.get_access_token_secret())
+        return auth
+        
 
 class TwitterStreamer():
 
@@ -62,7 +77,13 @@ class ListenerTS(tweepy.StreamListener):
             tweet_text = ""
             #Check if the tweet has the keys lang and created_at and whether its in english
             if all(x in tweet.keys() for x in ['lang', 'created_at']) and tweet['lang'] == 'en':
-                if tweet['truncated'] == 'true':
+                if 'retweeted_status' in tweet.keys():
+                    if 'quoted_status' in tweet['retweeted_status'].keys():
+                        if('extended_tweet' in tweet['retweeted_status']['quoted_status'].keys()):
+                            tweet_text = tweet['retweeted_status']['quoted_status']['extended_tweet']['full_text']
+                        elif 'extended_tweet' in tweet['retweeted_status'].keys():
+                            tweet_text = tweet['retweeted_status']['extended_tweet']['full_text']
+                elif tweet['truncated'] == 'true':
                     tweet_text = tweet['extended_tweet']['full_text']
 
                 else:
