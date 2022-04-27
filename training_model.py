@@ -52,7 +52,7 @@ or topic on Twitter.
 
 The data is a CSV with emoticons removed. Data file format has 6 fields:
 
-c0 - the polarity of the tweet (0 = negative, 2 = neutral, 4 = positive)
+c0 - the polarity of the tweet (0 = negative,a4 = positive)
 c1 - the id of the tweet (2087)
 c2 - the date of the tweet (Sat May 16 23:58:44 UTC 2009)
 c3 - the query (lyx). If there is no query, then this value is NO_QUERY.
@@ -105,11 +105,16 @@ training_model = pipeline.fit(train)
 #### Make predictions based on the test data
 predictions = training_model.transform(test)
 
-predictions.show(5)
+predictions.show(100)
+predictions.withColumn('words', col('words').cast('string'))
+predictions.withColumn('processed_data', col('processed_data').cast('string'))
+predictions.printSchema()
 
 evaluator = BinaryClassificationEvaluator(rawPredictionCol="rawPrediction")
 accuracy = evaluator.evaluate(predictions)
-print(accuracy) # accuracy of 0.8259443151135422 attained
+print('\n***********************************************')
+print(f"Accuray of prediction: {accuracy}") 
+print('\n***********************************************')
 
 model_path = str(SRC_DIR.joinpath('models'))
 
