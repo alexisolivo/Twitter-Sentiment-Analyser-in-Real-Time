@@ -47,25 +47,6 @@ class TwitterAuth():
         auth = OAuthHandler(twitter_config.get_consumer_key(), twitter_config.get_consumer_secret())
         auth.set_access_token(twitter_config.get_access_token(), twitter_config.get_access_token_secret())
         return auth
-        
-
-class TwitterStreamer():
-
-    """SET UP STREAMER"""
-    def __init__(self):
-        self.TwitterAuth = TwitterAuth()
-
-    def stream_tweets(self):
-        i = 0
-        while True:
-            i+=1
-            print('{0}.Hello'.format(i))
-            listener = ListenerTS() 
-            auth = self.TwitterAuth.authenticate_twitter_app()
-            stream = Stream(auth, listener)
-            stream.filter(track = WORDS_TO_TRACK, stall_warnings=True, languages= ["en"])
-            print(stream)
-
 
 class ListenerTS(tweepy.StreamListener):
    
@@ -101,7 +82,24 @@ class ListenerTS(tweepy.StreamListener):
         # 420 error happens due to rate limiting
         if(status == 420): 
             #returning False in on_data disconnects the stream
-            return False 
+            return False         
+
+class TwitterStreamer():
+
+    """SET UP STREAMER"""
+    def __init__(self):
+        self.TwitterAuth = TwitterAuth()
+
+    def stream_tweets(self):
+        i = 0
+        while True:
+            i+=1
+            print('{0}.Hello'.format(i))
+            listener = ListenerTS() 
+            auth = self.TwitterAuth.authenticate_twitter_app()
+            stream = Stream(auth, listener)
+            stream.filter(track = WORDS_TO_TRACK, stall_warnings=True, languages= ["en"])
+            print(stream)
       
 
 if __name__ == "__main__":
