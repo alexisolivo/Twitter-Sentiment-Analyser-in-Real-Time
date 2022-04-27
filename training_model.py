@@ -99,10 +99,20 @@ label_indexer = StringIndexer(inputCol = "sentiment", outputCol = "label")
 logistic_regression = LogisticRegression(maxIter=100)
 
 pipeline = Pipeline(stages=[stop_word_remover, vectorizer, idf, label_indexer, logistic_regression])
-#### Fit the pipeline to training dataframe
+
+#### Fit the pipeline to training dataframe.
+'''
+A pipeline is an Estimator.Calling the Pipeline fit() method with training data 
+passes it through the Estimator stages to produce a Transformer or PipelineModel.
+'''
 training_model = pipeline.fit(train)
 
 #### Make predictions based on the test data
+'''
+The pipeline model is used at test time.
+Now when you run the transfrom method of the Transformer with test data
+it passes data through transformer stages to give final predicitons.
+'''
 predictions = training_model.transform(test)
 
 predictions.show(100)
