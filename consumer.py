@@ -47,9 +47,11 @@ def clean_tweet(tweet):
     
     #Remove any stop words:
     '''
-    What is a stop word? Stop words are words that are considered unimportant to the meaning of a text. These words may seem important to us, humans, but to machine these words may be considered nuisance to the processing steps.
+    What is a stop word? Stop words are words that are considered unimportant to the meaning of a text. These words may seem important to us, 
+    humans, but to machine these words may be considered nuisance to the processing steps.
 
-    It’s also important to keep in mind that stop words are largely language-dependent. In English, you have stop words such as for, to, and, or, in, out, etc. 
+    It’s also important to keep in mind that stop words are largely language-dependent. In English, you have stop words such as for, to, 
+    and, or, in, out, etc. 
     '''
     #Split the sentence into words
     temp = temp.split()
