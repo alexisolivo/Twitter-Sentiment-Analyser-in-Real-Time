@@ -2,9 +2,23 @@
 
 A real time streaming ETL pipeline for Twitter data is implemented using Apache Kafka, Apache Spark and Delta Lake Database. Sentiment analysis is performed using Spark Machine Learning libraries on the streaming data, before being written to the database.
 
-## Architecture:
+## Requirements:
 
-![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/Architecture.jpg?raw=true)
+* certifi==2021.10.8
+* charset-normalizer==2.0.12
+* idna==3.3
+* kafka==1.3.5
+* kafka-python==2.0.2
+* numpy==1.22.2
+* oauthlib==3.2.0
+* py4j==0.10.9.3
+* PySocks==1.7.1
+* pyspark==3.2.1
+* requests==2.27.1
+* requests-oauthlib==1.3.1
+* six==1.16.0
+* tweepy==3.10.0
+* urllib3==1.26.8
 
 
 ## Usage:
@@ -49,21 +63,35 @@ So before you can write your first events, you must create a topic. Open another
 ```
 $ bin/kafka-topics.sh --create --topic twitterdata --bootstrap-server localhost:9092
 ```
-All of Kafka's command line tools have additional options: run the kafka-topics.sh command without any arguments to display usage information. 
 
- For example, it can also show you details such as the partition count of the new topic:
-
-```
-$ bin/kafka-topics.sh --describe --topic twitterdata --bootstrap-server localhost:9092
-```
-
-Topic:twitterdata PartitionCount:1    ReplicationFactor:1 Configs:
-    Topic: quickstart-events Partition: 0    Leader: 0   Replicas: 0 Isr: 0
 
 ### Installing the python dependencies:
 ```
 pip install -r requirements.txt
 ```
+
+### Running the python programs:
+
+Once all the Kakfa servers are running the python applications can be executed in the below order:
+
+#### Run the Kafka Producer to write to the Kafka topic:
+```
+python producer.py
+```
+#### Run the Kafka Consumer to consume data from Kafka and perform ML analysis using SparkML
+```
+python consumer.py
+```
+
+#### Run the program to read processed sentimental data from the Delta Lake and write to sink for further visualisation.
+```
+python read_delta_stream.py
+```
+
+## Architecture:
+
+![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/Architecture.jpg?raw=true)
+
 ## ML Pipeline for Sentiment Analysis
 
 Stanford's [Sentiment140]https://www.kaggle.com/kazanova/sentiment140 dataset is used to train an ML pipeline consisting of five stages. Spark ML libraries were used for creating the ML pipeline. 
