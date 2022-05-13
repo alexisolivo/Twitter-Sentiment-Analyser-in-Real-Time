@@ -1,6 +1,7 @@
 import json
 # Twitter API Access Keys
 import datetime
+import time
 
 import tweepy
 from tweepy import OAuthHandler
@@ -11,6 +12,8 @@ import twitter_creds as tc
 import tweepy
 import twitter_creds as tc
 
+WORDS_TO_TRACK = ["$LUNA","lunacoin"]
+
 def verify_access():
     # Authenticate to Twitter
     auth = tweepy.OAuthHandler(tc.consumer_key, 
@@ -18,6 +21,8 @@ def verify_access():
     auth.set_access_token(tc.access_token, 
         tc.access_token_secret)
     api = tweepy.API(auth)
+    print('\nAuthenticating Twitter Credentials. Please wait......')
+    time.sleep(3)
     try:
         status = api.verify_credentials()
         if status:
@@ -25,6 +30,7 @@ def verify_access():
             return True
         else:
             print('\nInvalid Twitter Credentials.\n')
+            print('Exiting....\n')
             return False
     except:
         print("\nError during Twitter Authentication.\n")
@@ -32,7 +38,10 @@ def verify_access():
 
 def check_broker_status():
     kafka_producer = ''
-    kafka_producer_server = KafkaConfig().get_producer_sever()
+    kafka_producer_server = KafkaConfig().get_producer_server()
+    time.sleep(2)
+    print('Checking Kafka Broker status....\n')
+    time.sleep(3)
     try:
         kafka_producer = KafkaProducer(bootstrap_servers=kafka_producer_server)
         print('Kafka brokers are running at 9092.')
@@ -43,14 +52,12 @@ def check_broker_status():
         return False
 
 
-WORDS_TO_TRACK = ["Covid-19","coronavirus","covid"]
-
 class KafkaConfig():
     def __init__(self):
-        self.producer_sever = 'localhost:9092' #Same port as your Kafka server
+        self.producer_server = 'localhost:9092' #Same port as your Kafka server
 
-    def get_producer_sever(self):
-        return self.producer_sever
+    def get_producer_server(self):
+        return self.producer_server
 
 class TwitterConfig():
     def __init__(self):
@@ -93,11 +100,15 @@ class TwitterStreamer():
     def stream_tweets(self):
         i = 0
         while True:
-            listener = ListenerTS() 
-            auth = self.TwitterAuth.authenticate_twitter_app()
-            stream = Stream(auth, listener)
-            stream.filter(track = WORDS_TO_TRACK, stall_warnings=True, languages= ["en"])
-         
+            try:
+                listener = ListenerTS() 
+                auth = self.TwitterAuth.authenticate_twitter_app()
+                stream = Stream(auth, listener)
+                stream.filter(track = WORDS_TO_TRACK, stall_warnings=True, languages= ["en"])
+            except:
+                print('Connection reset by peer!!')
+                pass
+            
 
 
 class ListenerTS(tweepy.StreamListener):
@@ -105,7 +116,7 @@ class ListenerTS(tweepy.StreamListener):
     def on_data(self, data):
 
             kafka_producer = ''
-            kafka_producer_server = KafkaConfig().get_producer_sever()
+            kafka_producer_server = KafkaConfig().get_producer_server()
 
             kafka_producer = KafkaProducer(bootstrap_servers=kafka_producer_server)
                 
@@ -134,7 +145,10 @@ class ListenerTS(tweepy.StreamListener):
                     }
 
                     kafka_producer.send(topic_name, value = json.dumps(data).encode('utf-8'))
-                    print(f"\nTweet has been send to Kafka topic at: {datetime.datetime.now()}")
+                    print('----------------------------------------------------------------------------------------------------------')
+                    print(f"[{tweet['created_at']}]:{tweet_text}")
+                    print('----------------------------------------------------------------------------------------------------------')
+                    time.sleep(3)
 
     def on_error(self, status):
         # 420 error happens due to rate limiting
