@@ -4,22 +4,9 @@ A real time streaming ETL pipeline for Twitter data is implemented using Apache 
 
 ## Requirements:
 
-* certifi==2021.10.8
-* charset-normalizer==2.0.12
-* idna==3.3
 * kafka==1.3.5
-* kafka-python==2.0.2
-* numpy==1.22.2
-* oauthlib==3.2.0
-* py4j==0.10.9.3
-* PySocks==1.7.1
 * pyspark==3.2.1
-* requests==2.27.1
-* requests-oauthlib==1.3.1
-* six==1.16.0
 * tweepy==3.10.0
-* urllib3==1.26.8
-
 
 ## Usage:
 
@@ -33,7 +20,6 @@ $ tar -xzf kafka_2.13-3.1.0.tgz
 
 $ cd kafka_2.13-3.1.0 
 ```
-
 
 STEP 2: START THE KAFKA ENVIRONMENT
 NOTE: Your local environment must have Java 8+ installed.
