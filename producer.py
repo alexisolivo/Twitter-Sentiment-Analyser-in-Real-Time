@@ -9,7 +9,6 @@ from tweepy import Stream
 from kafka import KafkaProducer
 
 import tweepy
-import twitter_creds as tc
 import os
 from dotenv import load_dotenv, find_dotenv
 
