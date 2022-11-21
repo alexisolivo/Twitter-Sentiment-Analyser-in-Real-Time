@@ -7,19 +7,27 @@ import tweepy
 from tweepy import OAuthHandler
 from tweepy import Stream
 from kafka import KafkaProducer
-import twitter_creds as tc
 
 import tweepy
 import twitter_creds as tc
+import os
+from dotenv import load_dotenv, find_dotenv
 
-WORDS_TO_TRACK = ["$LUNA","lunacoin"]
+load_dotenv(find_dotenv())
+
+WORDS_TO_TRACK = ["COVID","coronavirus"]
+
+CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
+CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
+ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
+ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_TOKEN_SECRET")
 
 def verify_access():
     # Authenticate to Twitter
-    auth = tweepy.OAuthHandler(tc.consumer_key, 
-        tc.consumer_secret)
-    auth.set_access_token(tc.access_token, 
-        tc.access_token_secret)
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, 
+        CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, 
+        ACCESS_TOKEN_SECRET)
     api = tweepy.API(auth)
     print('\nAuthenticating Twitter Credentials. Please wait......')
     time.sleep(3)
