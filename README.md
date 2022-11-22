@@ -14,7 +14,7 @@ A real time streaming ETL pipeline for Twitter data is implemented using Apache 
 
 ## Usage:
 
-### Setting up Kafka Environment:
+### 1.Setting up Kafka Environment:
 
 STEP 1: GET KAFKA
 Download the latest Kafka release and extract it:
@@ -55,12 +55,12 @@ $ bin/kafka-topics.sh --create --topic twitterdata --bootstrap-server localhost:
 ```
 
 
-### Installing the python dependencies:
+### 2.Installing the python dependencies:
 ```
 pip install -r requirements.txt
 ```
 
-### Running the python programs:
+### 3.Running the python programs:
 
 Once all the Kakfa servers are running the python applications can be executed in the below order:
 
@@ -76,6 +76,6 @@ python consumer.py
 
 ## ML Pipeline for Sentiment Analysis
 
-Stanford's [Sentiment140]https://www.kaggle.com/kazanova/sentiment140 dataset is used to train an ML pipeline consisting of five stages. Spark ML libraries were used for creating the ML pipeline. 
+Stanford's [Sentiment140]https://www.kaggle.com/kazanova/sentiment140 dataset was used to train an ML pipeline consisting of five stages. Spark ML libraries were used for creating the ML pipeline. 
 
 ![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/ML%20Pipeline.jpg)
