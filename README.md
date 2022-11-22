@@ -63,7 +63,7 @@ Once all the Kakfa servers are running the python applications can be executed i
 ```
 python producer.py
 ```
-#### Run the Kafka Consumer to consume data from Kafka and perform ML predictions using SparkML. The prediction results are stored to MongoDB cloud database.
+#### Run the Kafka Consumer to consume data from Kafka and perform ML predictions using SparkML. The prediction results are stored to MongoDB cloud database for visualisation.
 ```
 python consumer.py
 ```
