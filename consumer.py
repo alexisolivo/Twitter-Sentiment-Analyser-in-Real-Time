@@ -76,7 +76,9 @@ if __name__ == '__main__':
 
     schema = StructType(
         [StructField('created_at', StringType()),
-            StructField('tweet', StringType())]
+            StructField('tweet', StringType()),
+            StructField('search_word', StringType())
+            ]
     )
 
     kafka_df = spark \
@@ -114,10 +116,11 @@ if __name__ == '__main__':
     sentiment_udf = udf(lambda x : 'Positive' if x == 0.0 else 'Negative', StringType())
 
     prediction_df = prediction_df\
-        .select('processed_data','created_at','timestamp','tweet','prediction')
+        .select('search_word','processed_data','created_at','timestamp','tweet','prediction')
     #Creates new column with the sentiment output
     prediction_df = prediction_df.withColumn('sentiment', sentiment_udf(prediction_df.prediction))
 
+    #Write to mongoDB in batches
     def write_row(batch_df , batch_id):
         batch_df.write.format("com.mongodb.spark.sql.DefaultSource").mode("append").save()
         pass
