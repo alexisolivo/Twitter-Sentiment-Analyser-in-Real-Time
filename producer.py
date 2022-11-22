@@ -14,7 +14,7 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
-WORDS_TO_TRACK = ["COVID","coronavirus"]
+WORDS_TO_TRACK = "COVID"
 
 CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
 CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
@@ -126,7 +126,8 @@ class ListenerTS(tweepy.StreamListener):
                 if tweet_text:
                     data = {
                         'created_at': tweet['created_at'],
-                        'tweet': tweet_text
+                        'tweet': tweet_text,
+                        'search_word': WORDS_TO_TRACK
                     }
 
                     kafka_producer.send(topic_name, value = json.dumps(data).encode('utf-8'))
