@@ -6,11 +6,6 @@ A real time streaming ETL pipeline for Twitter data is implemented using Apache 
 
 ![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/SystemArchitecture.jpg?raw=true)
 
-## Requirements:
-
-* kafka==1.3.5
-* pyspark==3.2.1
-* tweepy==3.10.0
 
 ## Usage:
 
