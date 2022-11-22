@@ -11,14 +11,15 @@ import re
 from pyspark.ml import PipelineModel
 from pathlib import Path
 SRC_DIR = Path(__file__).resolve().parent
-
 import os
-os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-streaming-kafka-0-10_2.12:3.2.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.2.0,io.delta:delta-core_2.12:1.1.0 pyspark-shell'
+os.environ['PYSPARK_SUBMIT_ARGS'] = '--packages org.apache.spark:spark-streaming-kafka-0-10_2.12:3.2.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.2.0,io.delta:delta-core_2.12:1.1.0,org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 pyspark-shell'
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
-
-KAFKA_TOPIC_NAME = 'twitterdata'
-KAFKA_BOOTSRAP_SEVER = 'localhost:9092'
-
+KAFKA_TOPIC_NAME = os.environ.get("KAFKA_TOPIC_NAME")
+KAFKA_BOOTSRAP_SEVER = os.environ.get("KAFKA_BOOTSRAP_SEVER")
+MONGO_CONN = os.environ.get("MONGO_CONN")
+working_directory = 'jars/*'
 """
 Spark Session:
 
@@ -66,15 +67,13 @@ if __name__ == '__main__':
 
     schema = StructType([StructField("text", StringType(), True)])
 
-    spark = SparkSession \
-    .builder \
-    .appName('APP') \
-    .master("local[*]") \
-    .enableHiveSupport() \
-    .config("spark.sql.warehouse.dir", "target/spark-warehouse") \
-    .config('spark.port.maxRetries', 100) \
+
+    spark = SparkSession.builder.master("local[*]").appName("SentimentApp") \
+    .config("spark.mongodb.input.uri", MONGO_CONN) \
+    .config("spark.mongodb.output.uri", MONGO_CONN) \
+    .config('spark.jars.packages', 'org.mongodb.spark:mongo-spark-connector_2.12:3.0.1')\
     .getOrCreate()
-    
+
     schema = StructType(
         [StructField('created_at', StringType()),
             StructField('tweet', StringType())]
@@ -119,24 +118,8 @@ if __name__ == '__main__':
     #Creates new column with the sentiment output
     prediction_df = prediction_df.withColumn('sentiment', sentiment_udf(prediction_df.prediction))
 
-### Write to delta lake
-    delta_output_path = str(SRC_DIR.parent.joinpath('delta/events/_checkpoints/twitter_sentiments'))
-    checkpoint = str(SRC_DIR.parent.joinpath('delta/events'))
+    def write_row(batch_df , batch_id):
+        batch_df.write.format("com.mongodb.spark.sql.DefaultSource").mode("append").save()
+        pass
 
-    query = prediction_df \
-    .writeStream \
-    .format("delta") \
-    .outputMode("append") \
-    .option("checkpointLocation", checkpoint) \
-    .start(delta_output_path)
-
-    query.awaitTermination()
-
-### Write to console
-'''
-    # prediction_df \
-    # .writeStream \
-    # .format("console") \
-    # .start() \
-    # .awaitTermination()
-    '''
+    prediction_df.writeStream.foreachBatch(write_row).start().awaitTermination()
