@@ -4,7 +4,7 @@ A real time streaming ETL pipeline for Twitter data is implemented using Apache 
 
 ## Architecture:
 
-![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/Architecture.jpg?raw=true)
+![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/SystemArchitecture.jpg?raw=true)
 
 ## Requirements:
 
