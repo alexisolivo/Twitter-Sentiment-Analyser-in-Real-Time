@@ -75,6 +75,6 @@ Stanford's [Sentiment140]https://www.kaggle.com/kazanova/sentiment140 dataset wa
 
 ![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/ML%20Pipeline.jpg)
 
-## Sentiment Visualisation using MongoDB chars
+## Sentiment Visualisation using MongoDB chart
 
 ![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/MongoDB_Visualisation.png)
