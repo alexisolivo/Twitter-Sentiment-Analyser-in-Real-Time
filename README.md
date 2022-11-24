@@ -79,3 +79,7 @@ python consumer.py
 Stanford's [Sentiment140]https://www.kaggle.com/kazanova/sentiment140 dataset was used to train an ML pipeline consisting of five stages. Spark ML libraries were used for creating the ML pipeline.
 
 ![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/ML%20Pipeline.jpg)
+
+## Sentiment Visualisation using MongoDB chart
+
+![Image](https://github.com/madhavms/Twitter-Sentiment-Analyser/blob/main/Images/MongoDB_Visualisation.png)
